@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "./forms/Button";
 import { signInWithGoogle, auth } from "../firbase/utils";
 import FormInput from "./forms/FormInput";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const [user, setUser] = useState({
@@ -57,6 +58,10 @@ const SignIn = () => {
         <Button type="submit">Log in</Button>
       </form>
       <Button onClick={signInWithGoogle}>Sign in with Google</Button>
+      <div className="max-w-max mx-auto my-2">
+      <Link className=" text-xl text-slate-800 font-semibold hover:text-blue-500" to="/recovery"><span className="">Forget passowrd</span></Link>
+
+      </div>
     </div>
   );
 };

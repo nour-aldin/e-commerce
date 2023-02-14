@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import HomePage from "./Pages/HomePage";
 import RegisterationPage from "./Pages/RegisterationPage";
 import Login from "./Pages/LogIn";
+import Recovery from "./Pages/recovery";
+
 
 import { auth, handleUserProfile } from "./firbase/utils";
 
@@ -40,6 +42,7 @@ function App() {
           path="/login"
           element={!user ? <Login /> : <Navigate replace to={"/"} />}
         />
+        <Route path="/recovery" element={<Recovery />} />
       </Routes>
     </div>
   );
