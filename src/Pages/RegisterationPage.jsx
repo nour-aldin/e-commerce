@@ -1,12 +1,14 @@
-import React from 'react'
-import Footer from '../components/Footer'
+import React from "react";
+import Footer from "../components/Footer";
+import Signup from "../components/Signup";
 
 const RegisterationPage = () => {
   return (
-    <div><h2>Register Page</h2>
-    <Footer />
+    <div>
+      <Signup />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default RegisterationPage
+export default RegisterationPage;
