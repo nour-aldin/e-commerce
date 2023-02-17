@@ -1,14 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInUser,
+  selectSignInSuccess,
+  signInSuccess,
+  signInWithGoogle
+} from "../redux/user/userSlice";
+
+import { Link, useNavigate } from "react-router-dom";
+
 import Button from "./forms/Button";
-import { signInWithGoogle, auth } from "../firbase/utils";
 import FormInput from "./forms/FormInput";
-import { Link } from "react-router-dom";
 
 const SignIn = () => {
+  const signInSuccess = useSelector(selectSignInSuccess);
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    console.log(signInSuccess)
+    if (signInSuccess) {
+      setUser({
+        email: "",
+        password: "",
+      });
+      return navigate("../", { replace: true });
+
+    }
+  },[signInSuccess]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,21 +44,14 @@ const SignIn = () => {
     });
   };
 
-  const handelFormSubmit = async e => {
-    e.preventDefault();
-    const {email, password} = user;
-
-    try {
-      auth.signInWithEmailAndPassword(email, password)
-      setUser({
-        email: '',
-        password: ''
-      })
-    } catch(err) {
-      console.log(err)
-    }
-
+  const handleSigninWithGoogle = () => {
+    dispatch(signInWithGoogle())
   }
+
+  const handelFormSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signInUser(user.email, user.password));
+  };
 
   return (
     <div className="border-2 border-black rounded-lg shadow-xl m-5 p-5 w-[40%] mx-auto">
@@ -57,10 +76,14 @@ const SignIn = () => {
         />
         <Button type="submit">Log in</Button>
       </form>
-      <Button onClick={signInWithGoogle}>Sign in with Google</Button>
+      <Button onClick={handleSigninWithGoogle}>Sign in with Google</Button>
       <div className="max-w-max mx-auto my-2">
-      <Link className=" text-xl text-slate-800 font-semibold hover:text-blue-500" to="/recovery"><span className="">Forget passowrd</span></Link>
-
+        <Link
+          className=" text-xl text-slate-800 font-semibold hover:text-blue-500"
+          to="/recovery"
+        >
+          <span className="">Forget passowrd</span>
+        </Link>
       </div>
     </div>
   );

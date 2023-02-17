@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpUser,selectSignUpError, selectSignUpSuccess, selectUser } from "../redux/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
-import { auth, handleUserProfile } from "../firbase/utils";
 
 import FormInput from "./forms/FormInput";
 import Button from "./forms/Button";
 
 const Signup = () => {
+
   const [user, setUser] = useState({
     displayName: "",
     email: "",
@@ -13,7 +16,19 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState([]);
+  const navigate = useNavigate()
+
+  const dispatch = useDispatch()
+
+  const signUpError = useSelector(selectSignUpError)
+  const signUpSuccess = useSelector(selectSignUpSuccess)
+  
+  useEffect(() => {
+    console.log(signUpSuccess)
+    if (signUpSuccess === true) {
+      navigate('../', {replace: true})
+    }
+  },[signUpSuccess])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,31 +38,23 @@ const Signup = () => {
     });
   };
 
-  const handelFormSubmit = async (e) => {
+  const handelFormSubmit = (e) => {
     e.preventDefault();
     const { displayName, email, password, confirmPassword } = user;
+    dispatch(signUpUser(displayName, email, password, confirmPassword))
+  };
 
-    if (password !== confirmPassword) {
-      const error = ["Password does not mached"];
-      setErrors(error);
-      return;
-    }
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-
-      await handleUserProfile(user, { displayName });
-
+  useEffect(() => {
+    if(signUpSuccess) {
       setUser({
         displayName: "",
         email: "",
         password: "",
         confirmPassword: "",
       });
-    } catch (err) {}
-  };
+      navigate('../', {replace: true})
+    }
+  },[signUpSuccess])
 
   return (
     <div className="border-2 border-black rounded-lg shadow-xl m-5 p-5 w-[40%] mx-auto">
@@ -55,9 +62,9 @@ const Signup = () => {
         Signup
       </h2>
 
-      {errors.length > 0 && (
+      {signUpError.length > 0 && (
         <ul className="bg-gray-100  shadow-lg w-[50%] my-0 mx-auto max-w-max">
-          {errors.map((error, index) => (
+          {signUpError.map((error, index) => (
             <li key={index} className="m-5 font-bold text-red-600">
               {error}
             </li>
