@@ -39,3 +39,56 @@ export const handleUserProfile = async (userAuth, additionalData ) => {
 
   return userRef;
 };
+
+export const handleAddProduct = product => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection('products')
+      .doc()
+      .set(product)
+      .then(() => {
+        resolve()
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
+
+// export const fetchProducts = () => {
+//   return new Promise((resolve, reject) => {
+//     firestore
+//     .collection('products')
+//     .get()
+//     .then(snapshot => {
+//       const productsArray = snapshot.docs.map(doc => {
+//         return {
+//           ...doc.data(),
+//           documentId: doc.id
+//         }
+//       })
+//       resolve(productsArray)
+//     })
+//     .catch(err => {
+//       reject(err)
+//     })
+//   })
+// }
+
+// export const fetchProducts = async () => {
+//   try {
+//     await firestore.collection('products').get()
+//     .then(snapshot => {
+//       const productsArray = snapshot.docs.map(doc => {
+//         return {
+//           ...doc.data(),
+//           documentId: doc.id
+//         }
+//       })
+//       return productsArray
+//     })
+//   }
+//   catch (err) {
+//     console.log(err)
+//   }
+// }
