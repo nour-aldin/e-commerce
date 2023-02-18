@@ -3,7 +3,7 @@ import { useNavigate,Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, logOut } from "../redux/user/userSlice";
-import { selectProducts,getProducts,fetchProducts } from "../redux/products/productsSlice";
+import { selectProducts,fetchProducts } from "../redux/products/productsSlice";
 import { checkUserIsAdmin } from "../Utils";
 
 
@@ -70,7 +70,7 @@ const Admin = () => {
         <AddNewProduct/>
         <div className="grid grid-cols-4 gap-4 justify-between p-5">
         {products&&products.map((product, index) => (
-            <ProductsCard key={index} product={product} />
+            <ProductsCard key={index} product={product} type="admin"/>
           ))}
         </div>
         

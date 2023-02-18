@@ -31,11 +31,18 @@ export const selectProducts = state => state.products.products
 
 export const {addProduct,getProducts,setProducts} = productsSlice.actions
 
-export const fetchProducts = () => async dispatch => {
+export const fetchProducts = (filterType="") => async dispatch => {
+  console.log(filterType)
   return new Promise((resolve, reject) => {
-    firestore
-    .collection('products')
-    .get()
+    let ref = firestore.collection('products')
+    if(filterType) {
+      console.log("men or women")
+      ref = ref.where('category', "==", filterType)
+    }
+    
+    
+    
+    ref.get()
     .then(snapshot => {
       const productsArray = snapshot.docs.map(doc => {
         return {
@@ -43,6 +50,7 @@ export const fetchProducts = () => async dispatch => {
           documentId: doc.id
         }
       })
+      
       dispatch(setProducts(productsArray))
       resolve()
     })

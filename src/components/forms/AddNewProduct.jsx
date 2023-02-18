@@ -86,7 +86,6 @@ const AddNewProduct = () => {
             onChange={handleChange}
             label="Category"
             name="category"
-            require="true"
           />
           <FormInput
             type="text"

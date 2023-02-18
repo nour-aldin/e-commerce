@@ -11,6 +11,7 @@ import RegisterationPage from "./Pages/RegisterationPage";
 import Login from "./Pages/LogIn";
 import Recovery from "./Pages/recovery";
 import Admin from "./Pages/Admin"
+import Search from "./Pages/Search";
 
 import { auth, handleUserProfile } from "./firbase/utils";
 
@@ -55,6 +56,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/recovery" element={<Recovery />} />
         <Route path="/admin" element={<Admin />}/>
+        <Route path="/search" element={<Search />}/>
+        <Route path="/search/:filterType" element={<Search />}/>
       </Routes>
     </div>
   );
