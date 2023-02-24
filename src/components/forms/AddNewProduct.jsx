@@ -57,6 +57,10 @@ const AddNewProduct = () => {
 
   if (!showModal) return null;
 
+  const handleClose = () => {
+    dispatch(setModal(false))
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center">
       <div className="bg-white p-2 rounded w-[30%]">
@@ -112,7 +116,7 @@ const AddNewProduct = () => {
             name="price"
           />
         <Button type="submit">ADD PRODUCT</Button>
-        <Button onClick={close}>Close</Button>
+        <Button onClick={handleClose}>Close</Button>
         </form>
         
       </div>

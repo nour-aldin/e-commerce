@@ -4,7 +4,8 @@ import {
   signInUser,
   selectSignInSuccess,
   signInSuccess,
-  signInWithGoogle
+  signInWithGoogle,
+  selectSignInError
 } from "../redux/user/userSlice";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -14,6 +15,7 @@ import FormInput from "./forms/FormInput";
 
 const SignIn = () => {
   const signInSuccess = useSelector(selectSignInSuccess);
+  const signInError = useSelector(selectSignInError)
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -22,6 +24,7 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+  
 
   useEffect(() => {
     console.log(signInSuccess)
@@ -58,6 +61,15 @@ const SignIn = () => {
       <h2 className="max-w-max mx-auto my-2 text-xl text-slate-800 font-semibold shadow-xl">
         Login
       </h2>
+      {signInError.length > 0 && (
+        <ul className="bg-gray-100  shadow-lg  my-0 mx-auto max-w-max">
+          {signInError.map((error, index) => (
+            <li key={index} className="m-5 font-bold text-red-600">
+              {error}
+            </li>
+          ))}
+        </ul>
+      )}
       <form onSubmit={handelFormSubmit}>
         <FormInput
           type="email"

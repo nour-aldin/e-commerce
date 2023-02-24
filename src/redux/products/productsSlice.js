@@ -6,7 +6,9 @@ export const productsSlice = createSlice({
   name: "products",
   initialState: {
     newProduct: null,
-    products: []
+    products: [],
+    queryDoc: null,
+    isLastPage: false,
   },
   reducers: {
     addProduct: (state, action) => {
@@ -22,36 +24,45 @@ export const productsSlice = createSlice({
       fetchProducts()
     },
     setProducts: (state, action) => {
-      state.products = action.payload
+      state.products = action.payload.data
+      state.queryDoc = action.payload.queryDoc
+      state.isLastPage = action.payload.isLastPage
+
     }
   },
 })
 
 export const selectProducts = state => state.products.products
+export const selectQueryDoc = state => state.products.queryDoc
+export const selectIsLastPage = state => state.products.isLastPage
 
 export const {addProduct,getProducts,setProducts} = productsSlice.actions
 
-export const fetchProducts = (filterType="") => async dispatch => {
-  console.log(filterType)
+export const fetchProducts = (filterType="", startAfterDoc, persistProducts=[]) => async dispatch => {
+
   return new Promise((resolve, reject) => {
-    let ref = firestore.collection('products')
-    if(filterType) {
-      console.log("men or women")
-      ref = ref.where('category', "==", filterType)
-    }
-    
-    
+    const pageSize = 8
+
+    let ref = firestore.collection('products').limit(pageSize)
+
+    if(filterType) ref = ref.where('category', "==", filterType)
+    if(startAfterDoc) ref = ref.startAfter(startAfterDoc)
     
     ref.get()
     .then(snapshot => {
-      const productsArray = snapshot.docs.map(doc => {
-        return {
-          ...doc.data(),
-          documentId: doc.id
-        }
-      })
-      
-      dispatch(setProducts(productsArray))
+      const totalCount = snapshot.size
+      const data = [
+        ...persistProducts,
+        ...snapshot.docs.map(doc => {
+          return {
+            ...doc.data(),
+            documentId: doc.id
+          }
+        })
+      ]
+      const queryDoc = snapshot.docs[totalCount - 1]
+      const isLastPage = totalCount < 1
+      dispatch(setProducts({data: data, queryDoc: queryDoc, isLastPage: isLastPage}))
       resolve()
     })
     .catch(err => {

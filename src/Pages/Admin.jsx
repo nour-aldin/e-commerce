@@ -3,7 +3,7 @@ import { useNavigate,Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, logOut } from "../redux/user/userSlice";
-import { selectProducts,fetchProducts } from "../redux/products/productsSlice";
+import { selectProducts,fetchProducts, selectIsLastPage } from "../redux/products/productsSlice";
 import { checkUserIsAdmin } from "../Utils";
 
 
@@ -12,6 +12,7 @@ import Button from "../components/forms/Button";
 import AddNewProduct from "../components/forms/AddNewProduct";
 import { setModal } from "../redux/modal/modalSlice";
 import ProductsCard from "../components/ProductsCard";
+import LoadMore from "../components/LoadMore";
 
 const Admin = () => {
 
@@ -19,13 +20,13 @@ const Admin = () => {
   
   const user = useSelector(selectUser);
   const products = useSelector(selectProducts)
+
   const dispatch = useDispatch()
 
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchProducts())
-   console.log(products)
   },[])
 
   useEffect(() => {
@@ -42,10 +43,6 @@ const Admin = () => {
 
   const handleNewProduct = () => {
     dispatch(setModal(true))
-  }
-
-  const disableModal = () => {
-    dispatch(setModal(false))
   }
 
   return (
@@ -73,7 +70,7 @@ const Admin = () => {
             <ProductsCard key={index} product={product} type="admin"/>
           ))}
         </div>
-        
+        <LoadMore />
       </div>
       
     </div>

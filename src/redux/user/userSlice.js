@@ -8,6 +8,7 @@ export const userSlice = createSlice({
   initialState: {
     user: null,
     signInSuccess: JSON.parse(localStorage.getItem('signInSuccess')) || false,
+    signInError: [],
     signUpSuccess: JSON.parse(localStorage.getItem('signUpSuccess')) || false,
     signUpError: [],
   },
@@ -30,6 +31,9 @@ export const userSlice = createSlice({
     signInSuccess: (state, action) => {
       state.signInSuccess = action.payload;
     },
+    signInError: (state, action) => {
+      state.signInError = action.payload;
+    },
     signUpError: (state, action) => {
       state.signUpError = action.payload;
     },
@@ -39,11 +43,12 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, signInSuccess, signUpError, signUpSuccess } =
+export const { setUser, signInSuccess, signInError, signUpError, signUpSuccess } =
   userSlice.actions;
 
 export const selectUser = (state) => state.user.user;
 export const selectSignInSuccess = (state) => state.user.signInSuccess;
+export const selectSignInError = (state) => state.user.signInError;
 export const selectSignUpError = (state) => state.user.signUpError;
 export const selectSignUpSuccess = (state) => state.user.signUpSuccess;
 
@@ -53,7 +58,7 @@ export const signInUser = (email, password) => async (dispatch) => {
     dispatch(signInSuccess(true));
     localStorage.setItem('signInSuccess', JSON.stringify(true))
   } catch (err) {
-    console.log(err);
+    dispatch(signInError([err.message]))
   }
 };
 
