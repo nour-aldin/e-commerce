@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { handleAddProduct, auth,firestore } from "../../firbase/utils";
+import { handleAddProduct, auth, firestore, handleFetchProduct } from "../../firbase/utils";
 
 export const productsSlice = createSlice({
   name: "products",
   initialState: {
     newProduct: null,
     products: [],
+    product: {},
     queryDoc: null,
     isLastPage: false,
   },
@@ -28,15 +29,19 @@ export const productsSlice = createSlice({
       state.queryDoc = action.payload.queryDoc
       state.isLastPage = action.payload.isLastPage
 
+    },
+    setProduct: (state, action) => {
+      state.product = action.payload
     }
   },
 })
 
 export const selectProducts = state => state.products.products
+export const selectProduct = state => state.products.product
 export const selectQueryDoc = state => state.products.queryDoc
 export const selectIsLastPage = state => state.products.isLastPage
 
-export const {addProduct,getProducts,setProducts} = productsSlice.actions
+export const {addProduct,getProducts,setProducts,setProduct} = productsSlice.actions
 
 export const fetchProducts = (filterType="", startAfterDoc, persistProducts=[]) => async dispatch => {
 
@@ -79,6 +84,16 @@ export const deleteProduct = (productId) => async dispatch => {
     dispatch(fetchProducts(productId))
   }
   catch(err) {
+    console.log(err)
+  }
+}
+
+export const fetchProduct = productID => async dispatch => {
+  try {
+    const product = await handleFetchProduct(productID)
+    dispatch(setProduct(product))
+  }
+  catch (err) {
     console.log(err)
   }
 }

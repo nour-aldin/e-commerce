@@ -12,13 +12,14 @@ import Login from "./Pages/LogIn";
 import Recovery from "./Pages/recovery";
 import Admin from "./Pages/Admin"
 import Search from "./Pages/Search";
+import ProductDetails from "./Pages/ProductDetails";
 
 import { auth, handleUserProfile } from "./firbase/utils";
 
 import "./index.css";
 
 function App() {
-  // const user = useSelector(selectUser);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -58,6 +59,7 @@ function App() {
         <Route path="/admin" element={<Admin />}/>
         <Route path="/search" element={<Search />}/>
         <Route path="/search/:filterType" element={<Search />}/>
+        <Route path="/product/:productID" element={<ProductDetails />}/>
       </Routes>
     </div>
   );

@@ -9,6 +9,7 @@ import Button from "./Button";
 import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
 import { selectModal, setModal } from "../../redux/modal/modalSlice";
+import {CKEditor}  from "ckeditor4-react";
 
 const AddNewProduct = () => {
 
@@ -18,6 +19,7 @@ const AddNewProduct = () => {
     thumbnail: "",
     price: 0,
   });
+  const [description, setDescription] = useState('')
 
   const [errors, setErrors] = useState([])
   const showModal = useSelector(selectModal)
@@ -62,7 +64,7 @@ const AddNewProduct = () => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center">
+    <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center ">
       <div className="bg-white p-2 rounded w-[30%]">
       
         <h1 className="uppercase text-2xl font-thin mx-5 mt-2">Add new product</h1>
@@ -115,8 +117,16 @@ const AddNewProduct = () => {
             onChange={handleChange}
             name="price"
           />
-        <Button type="submit">ADD PRODUCT</Button>
+          {/* <div className="  h-[50px]">
+          <CKEditor
+            onChange={e => setDescription(e.editor.getData())}
+            
+           />
+          </div> */}
+          <Button type="submit">ADD PRODUCT</Button>
         <Button onClick={handleClose}>Close</Button>
+        
+        
         </form>
         
       </div>

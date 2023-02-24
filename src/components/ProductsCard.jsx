@@ -3,6 +3,9 @@ import Button from "./forms/Button";
 
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../redux/products/productsSlice";
+import { Link } from "react-router-dom";
+
+import { addToCart } from "../redux/cart/cartSlice";
 
 const ProductsCard = ({product, type}) => {
   const dispatch = useDispatch()
@@ -11,26 +14,35 @@ const ProductsCard = ({product, type}) => {
     dispatch(deleteProduct(documentId))
     console.log(documentId)
   } 
+
+  const handleAddToCart = (product) => {
+    if(!product) return 
+
+    console.log(product)
+
+    dispatch(addToCart(product))
+
+  }
   return (
     <div className="w-[300px] bg-white shadow-md rounded-lg  dark:bg-white ">
-      <a >
+      <Link to={`/product/${product.documentId}`}>
         <img
           className="rounded-t-lg w-[300px] h-[300px]"
           src={product.thumbnail}
           alt="product image"
         />
-      </a>
+      </Link>
       {/* <div className="flex items-center justify-between m-2">
           <span className="text-sm font-bold text-gray-900 dark:text-black ">
             {product.category}
           </span>
         </div> */}
       <div className="px-3 pb-3 mx-auto">
-        <a href="#">
+        <Link to={`/product/${product.documentId}`}>
           <h5 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-black mx-auto text-center">
             {product.name}
           </h5>
-        </a>
+        </Link>
         
         
         <div className="flex items-center justify-between mt-1">
@@ -44,7 +56,7 @@ const ProductsCard = ({product, type}) => {
         )}
         {
           type === 'user' && (
-            <Button>Add To Cart</Button>
+            <Button onClick={() => handleAddToCart(product)}>Add To Cart</Button>
           )
         }
         </div>

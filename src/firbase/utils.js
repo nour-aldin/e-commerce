@@ -55,40 +55,20 @@ export const handleAddProduct = product => {
   })
 }
 
-// export const fetchProducts = () => {
-//   return new Promise((resolve, reject) => {
-//     firestore
-//     .collection('products')
-//     .get()
-//     .then(snapshot => {
-//       const productsArray = snapshot.docs.map(doc => {
-//         return {
-//           ...doc.data(),
-//           documentId: doc.id
-//         }
-//       })
-//       resolve(productsArray)
-//     })
-//     .catch(err => {
-//       reject(err)
-//     })
-//   })
-// }
+export const handleFetchProduct = productID => {
+  return new Promise((resolve, reject) => {
+    firestore
+    .collection('products')
+    .doc(productID)
+    .get()
+    .then(snapshot => {
+      if(snapshot.exists) {
+        resolve(snapshot.data())
+      }
+    })
+    .catch(err =>{
+      reject(err)
+    })
+  })
 
-// export const fetchProducts = async () => {
-//   try {
-//     await firestore.collection('products').get()
-//     .then(snapshot => {
-//       const productsArray = snapshot.docs.map(doc => {
-//         return {
-//           ...doc.data(),
-//           documentId: doc.id
-//         }
-//       })
-//       return productsArray
-//     })
-//   }
-//   catch (err) {
-//     console.log(err)
-//   }
-// }
+}

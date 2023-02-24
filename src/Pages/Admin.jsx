@@ -64,7 +64,7 @@ const Admin = () => {
       <div>
         <Button onClick={handleNewProduct}>ADD NEW PRODUCT </Button>
         
-        <AddNewProduct/>
+        
         <div className="grid grid-cols-4 gap-4 justify-between p-5">
         {products&&products.map((product, index) => (
             <ProductsCard key={index} product={product} type="admin"/>
@@ -72,7 +72,7 @@ const Admin = () => {
         </div>
         <LoadMore />
       </div>
-      
+      <AddNewProduct/>
     </div>
   );
 };
