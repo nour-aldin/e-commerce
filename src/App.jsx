@@ -13,6 +13,7 @@ import Recovery from "./Pages/recovery";
 import Admin from "./Pages/Admin"
 import Search from "./Pages/Search";
 import ProductDetails from "./Pages/ProductDetails";
+import Cart from "./Pages/Cart";
 
 import { auth, handleUserProfile } from "./firbase/utils";
 
@@ -60,6 +61,7 @@ function App() {
         <Route path="/search" element={<Search />}/>
         <Route path="/search/:filterType" element={<Search />}/>
         <Route path="/product/:productID" element={<ProductDetails />}/>
+        <Route path="/cart" element={<Cart />}/>
       </Routes>
     </div>
   );

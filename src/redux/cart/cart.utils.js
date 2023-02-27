@@ -33,3 +33,22 @@ export const handleAddToCart = (
     }
   ];
 };
+
+export const handleRemoveCartItem = (prevCartItems, cartItemToRemove) => {
+  return prevCartItems.filter(item => item.documentId !== cartItemToRemove.documentId)
+}
+
+export const handleReduceCartItem = (prevCartItems, cartItemToReduce) => {
+  const existingCartItem = prevCartItems.find(item => 
+    item.documentId === cartItemToReduce.documentId)
+  if (existingCartItem.quantity === 1) return handleRemoveCartItem(prevCartItems, cartItemToReduce)
+  
+  return prevCartItems.map(item => 
+    item.documentId === existingCartItem.documentId ?
+    {
+      ...item,
+      quantity: item.quantity - 1
+    }: item
+    
+    )
+}
