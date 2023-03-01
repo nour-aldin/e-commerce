@@ -57,7 +57,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="border-2  rounded-lg shadow-xl m-5 p-5 lg:w-[40%] mx-auto sm:w-full  lg:border-black sm:boder-0">
+    <div className="border-2  rounded-lg shadow-xl m-5 p-5 lg:w-[40%] mx-auto sm:w-full  lg:border-black sm:boder-0 lg:my-5 md:my-[300px] md:w-[80%] ">
       <h2 className="max-w-max mx-auto my-2 text-xl text-slate-800 font-semibold shadow-xl">
         Login
       </h2>

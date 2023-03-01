@@ -1,0 +1,1 @@
+export const key = "pk_test_51MgcgGELUHtaWNJyLCTTbyOveBpUyM9h8ThQ7GWbvsbnWaokN8bGYhHYH6KygnUhmyWePkqsq3kxAjiZuzmsinJX00sLUXVhH3"

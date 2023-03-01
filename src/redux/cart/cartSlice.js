@@ -21,11 +21,14 @@ export const cartSlice = createSlice({
     reduceCartItem: (state, action) => {
       state.cartItems = handleReduceCartItem(state.cartItems, action.payload)
       
+    },
+    clearCart: (state) => {
+      state.cartItems = []
     }
   },
 });
 
-export const { addToCart, removeCartItem, reduceCartItem } = cartSlice.actions;
+export const { addToCart, removeCartItem, reduceCartItem,  clearCart} = cartSlice.actions;
 export const selectState = (state) => state.cart;
 
 export const selectCartItems = (state) => state.cart.cartItems;

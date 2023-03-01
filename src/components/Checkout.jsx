@@ -57,7 +57,7 @@ const Checkout = () => {
         <h2 className="shadow-lg inline ">Total: {totalPrice}</h2>
         <div className="inline-flex space-x-11 w-full mt-5 ">
           <button onClick={() => navigate(-1)} className="uppercase rounded-lg w-full p-2.5 shadow-xl text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium  text-sm dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" >Continue shopping</button>
-          <button className="uppercase rounded-lg  w-full p-2.5 shadow-xl text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium  text-sm dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 " >checkout</button>
+          <button onClick={() => navigate('/payment')} className="uppercase rounded-lg  w-full p-2.5 shadow-xl text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium  text-sm dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 " >checkout</button>
         </div>
         </div>
         </>

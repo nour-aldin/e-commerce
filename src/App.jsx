@@ -18,6 +18,7 @@ import Cart from "./Pages/Cart";
 import { auth, handleUserProfile } from "./firbase/utils";
 
 import "./index.css";
+import Payment from "./Pages/Payment";
 
 function App() {
 
@@ -62,6 +63,7 @@ function App() {
         <Route path="/search/:filterType" element={<Search />}/>
         <Route path="/product/:productID" element={<ProductDetails />}/>
         <Route path="/cart" element={<Cart />}/>
+        <Route path="/payment" element={<Payment />}/>
       </Routes>
     </div>
   );

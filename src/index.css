@@ -5,6 +5,18 @@
 * {
   font-family: 'Open Sans', sans-serif;
 }
+
 /* .ck-editor__editable {
   min-height: 200px !important;
 } */
+
+.xx {
+  width: 20% !important;
+
+}
+
+@media (min-width: 768) {
+  .xx {
+    width: 100%;
+  }
+}
