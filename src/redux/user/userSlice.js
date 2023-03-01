@@ -7,9 +7,9 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     user: null,
-    signInSuccess: JSON.parse(localStorage.getItem('signInSuccess')) || false,
+    signInSuccess: false,
     signInError: [],
-    signUpSuccess: JSON.parse(localStorage.getItem('signUpSuccess')) || false,
+    signUpSuccess: false,
     signUpError: [],
   },
 
@@ -56,7 +56,7 @@ export const signInUser = (email, password) => async (dispatch) => {
   try {
     await auth.signInWithEmailAndPassword(email, password);
     dispatch(signInSuccess(true));
-    localStorage.setItem('signInSuccess', JSON.stringify(true))
+    dispatch(signUpError([]))
   } catch (err) {
     dispatch(signInError([err.message]))
   }
@@ -77,7 +77,6 @@ export const signUpUser =
 
       await handleUserProfile(user, { displayName });
       dispatch(signUpSuccess(true));
-      localStorage.setItem('signUpSuccess', JSON.stringify(true))
     } catch (err) {
       console.log(err);
     }
@@ -87,7 +86,6 @@ export const signInWithGoogle = () => async dispatch => {
     await auth.signInWithPopup(GoogleProvider)
     .then(() => {
       dispatch(signInSuccess(true));
-      localStorage.setItem('signInSuccess', JSON.stringify(true))
     })
   } catch (err) {
     console.log(err)
@@ -101,8 +99,6 @@ export const logOut = () => async dispatch => {
     .then(() => {
       dispatch(signInSuccess(false));
       dispatch(signUpSuccess(false))
-      localStorage.setItem('signInSuccess', JSON.stringify(false))
-      localStorage.setItem('signUpSuccess', JSON.stringify(false))
     })
       
     

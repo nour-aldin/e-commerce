@@ -11,7 +11,8 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { apiInstance } from "../Utils";
 
 import { useSelector, useDispatch } from "react-redux";
-import {selectCartTotal, clearCart, selectTotalNumCartItems} from '../redux/cart/cartSlice'
+import {selectCartTotal, clearCart, selectTotalNumCartItems, selectCartItems} from '../redux/cart/cartSlice'
+import { saveOrder } from "../redux/orders/orderSlice";
 
 
 const initialAddressState = {
@@ -30,6 +31,7 @@ const PaymentDetails = () => {
   const dispatch = useDispatch()
   const total = useSelector(selectCartTotal)
   const totalItems = useSelector(selectTotalNumCartItems)
+  const cartItems = useSelector(selectCartItems)
   const [billingAddress, setBillingAddress] = useState({
     ...initialAddressState,
   });
@@ -41,7 +43,7 @@ const PaymentDetails = () => {
 
   useEffect(() => {
     if(totalItems < 1) {
-      navigate('/')
+      navigate('/dashboard')
     }
   },[totalItems])
 
@@ -100,7 +102,23 @@ const PaymentDetails = () => {
           payment_method: paymentMethod.id
         })
         .then(({ paymentIntent }) => {
+
+          const configOrder = {
+            orderTotal: total,
+            orderItems: cartItems.map(item => {
+              const {documentId, thumbnail, name, price, quantity} = item
+              return {
+                documentId,
+                thumbnail,
+                name,
+                price,
+                quantity
+              }
+            })
+          }
+          dispatch(saveOrder(configOrder))
           dispatch(clearCart())
+
         })
       })
     })

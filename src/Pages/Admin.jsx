@@ -7,16 +7,17 @@ import { selectProducts,fetchProducts, selectIsLastPage } from "../redux/product
 import { checkUserIsAdmin } from "../Utils";
 
 
-import userProfileImage from '../assets/user.png'
+
 import Button from "../components/forms/Button";
 import AddNewProduct from "../components/forms/AddNewProduct";
 import { setModal } from "../redux/modal/modalSlice";
 import ProductsCard from "../components/ProductsCard";
 import LoadMore from "../components/LoadMore";
+import UserToolBar from "../components/UserToolBar";
 
 const Admin = () => {
 
-  const [displayName, setDisplayName] = useState('')
+  
   
   const user = useSelector(selectUser);
   const products = useSelector(selectProducts)
@@ -32,14 +33,10 @@ const Admin = () => {
   useEffect(() => {
     if (!checkUserIsAdmin(user)) {
       navigate("../login", { replace: true });
-    } else {
-      setDisplayName(user.displayName)
-    }
+    } 
   }, [user]);
 
-  const handleSignOut = () => {
-    dispatch(logOut())
-  }
+  
 
   const handleNewProduct = () => {
     dispatch(setModal(true))
@@ -47,20 +44,7 @@ const Admin = () => {
 
   return (
     <div className="flex flex-row py-1 ">
-      <div className="w-60 h-[655px] shadow-md bg-white px-1 ">
-      <div className="w-full  p-5 shadow-md">
-        <img className="w-20 my-0 mx-auto" src={userProfileImage} alt="ProfileImage"/>
-        <h2 className="max-w-max my-5 mx-auto font-semibold text-xl uppercase ">{displayName}</h2>
-      </div>
-  <ul className="relative">
-    <li className="relative">
-      <Link to="/" className="flex items-center text-2xl font-extralight px-2 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap  hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out shadow-md rounded-sm" >Home</Link>
-    </li>
-    <li className="relative">
-      <Link className="flex items-center text-2xl font-extralight px-2 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap  hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out shadow-md rounded-sm" onClick={handleSignOut} >Sign Out</Link>
-    </li>
-  </ul>
-</div>
+      <UserToolBar />
       <div>
         <Button onClick={handleNewProduct}>ADD NEW PRODUCT </Button>
         

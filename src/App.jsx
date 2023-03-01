@@ -14,11 +14,14 @@ import Admin from "./Pages/Admin"
 import Search from "./Pages/Search";
 import ProductDetails from "./Pages/ProductDetails";
 import Cart from "./Pages/Cart";
+import Payment from "./Pages/Payment";
+import Dashoboard from "./Pages/Dashoboard";
+import Order from "./Pages/Order";
+
 
 import { auth, handleUserProfile } from "./firbase/utils";
 
 import "./index.css";
-import Payment from "./Pages/Payment";
 
 function App() {
 
@@ -59,11 +62,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/recovery" element={<Recovery />} />
         <Route path="/admin" element={<Admin />}/>
+        <Route path="/dashboard" element={<Dashoboard />}/>
         <Route path="/search" element={<Search />}/>
         <Route path="/search/:filterType" element={<Search />}/>
         <Route path="/product/:productID" element={<ProductDetails />}/>
         <Route path="/cart" element={<Cart />}/>
         <Route path="/payment" element={<Payment />}/>
+        <Route path="/order/:orderID" element={<Order />}/>
       </Routes>
     </div>
   );
