@@ -25,6 +25,7 @@ const SignIn = () => {
   });
 
   useEffect(() => {
+    console.log("useeffect")
     if (signInSuccess == true) {
       setUser({
         email: "",
@@ -32,7 +33,7 @@ const SignIn = () => {
       });
       navigate("../", { replace: true });
     }
-  });
+  },[signInSuccess]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
