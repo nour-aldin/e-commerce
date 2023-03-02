@@ -24,7 +24,7 @@ const Admin = () => {
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, []);
+  }, [products]);
 
   useEffect(() => {
     if (!checkUserIsAdmin(user)) {

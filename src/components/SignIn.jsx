@@ -5,6 +5,7 @@ import {
   selectSignInSuccess,
   signInWithGoogle,
   selectSignInError,
+  selectUser,
 } from "../redux/user/userSlice";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -13,6 +14,7 @@ import Button from "./forms/Button";
 import FormInput from "./forms/FormInput";
 
 const SignIn = () => {
+  const User = useSelector(selectUser)
   const signInSuccess = useSelector(selectSignInSuccess);
   const signInError = useSelector(selectSignInError);
   const dispatch = useDispatch();
@@ -26,7 +28,7 @@ const SignIn = () => {
 
   useEffect(() => {
     console.log(signInSuccess);
-    if (signInSuccess) {
+    if (User) {
       setUser({
         email: "",
         password: "",

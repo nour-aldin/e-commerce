@@ -12,7 +12,6 @@ const ProductsCard = ({ product, type }) => {
 
   const removeProduct = (documentId) => {
     dispatch(deleteProduct(documentId));
-    console.log(documentId);
   };
 
   const handleAddToCart = (product) => {
@@ -31,7 +30,7 @@ const ProductsCard = ({ product, type }) => {
       </Link>
       <div className="px-3 pb-3 mx-auto">
         <Link to={`/product/${product.documentId}`}>
-          <h5 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-black mx-auto text-center">
+          <h5 className="text-lg font-light  text-gray-900 dark:text-black mx-auto text-center">
             {product.name}
           </h5>
         </Link>

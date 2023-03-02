@@ -39,10 +39,11 @@ const AddNewProduct = () => {
   const resetFrom = () => {
     setProduct({
       name: "",
-      category: "",
+      category: "mens",
       thumbnail: "",
       price: 0,
     });
+    setErrors([])
     dispatch(setModal(false))
   }
 
@@ -61,6 +62,7 @@ const AddNewProduct = () => {
 
   const handleClose = () => {
     dispatch(setModal(false))
+    resetFrom()
   }
 
   return (
