@@ -8,7 +8,6 @@ import { CountryDropdown } from "react-country-region-selector";
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
-import { apiInstance } from "../Utils";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -69,7 +68,6 @@ const PaymentDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const cardElement = elements.getElement("card");
     if (
       !shippingAddress.line1 ||
       !shippingAddress.city ||
@@ -86,54 +84,22 @@ const PaymentDetails = () => {
     ) {
       return;
     }
-    apiInstance.defaults.headers.common["Content-Type"] = "application/json";
-    apiInstance
-      .post("payment/create", {
-        amount: total * 100,
-        shipping: {
-          name: recipientName,
-          address: {
-            ...shippingAddress,
-          },
-        },
-      })
-      .then(({ data: clientSecret }) => {
-        stripe
-          .createPaymentMethod({
-            type: "card",
-            card: cardElement,
-            billing_details: {
-              name: nameOnCard,
-              address: {
-                ...billingAddress,
-              },
-            },
-          })
-          .then(({ paymentMethod }) => {
-            stripe
-              .confirmCardPayment(clientSecret, {
-                payment_method: paymentMethod.id,
-              })
-              .then(({ paymentIntent }) => {
-                const configOrder = {
-                  orderTotal: total,
-                  orderItems: cartItems.map((item) => {
-                    const { documentId, thumbnail, name, price, quantity } =
-                      item;
-                    return {
-                      documentId,
-                      thumbnail,
-                      name,
-                      price,
-                      quantity,
-                    };
-                  }),
-                };
-                dispatch(saveOrder(configOrder));
-                dispatch(clearCart());
-              });
-          });
-      });
+    const configOrder = {
+      orderTotal: total,
+      orderItems: cartItems.map((item) => {
+        const { documentId, thumbnail, name, price, quantity } =
+          item;
+        return {
+          documentId,
+          thumbnail,
+          name,
+          price,
+          quantity,
+        };
+      }),
+    };
+    dispatch(saveOrder(configOrder));
+    dispatch(clearCart());
   };
 
   const configCardElement = {

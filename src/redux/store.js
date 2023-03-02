@@ -18,7 +18,7 @@ const persistConfig = {
 
 export const store = configureStore ({
   reducer: {
-    user: userReducer,
+    user: persistReducer(persistConfig, userReducer),
     products: productsReducer,
     cart: persistReducer(persistConfig, cartReducer),
     modal: modalReducer,
@@ -32,7 +32,7 @@ export const store = configureStore ({
 
 
 
-// export const persistedReducer = persistReducer(persistConfig, store)
+
 
 export const persistor = persistStore(store)
 

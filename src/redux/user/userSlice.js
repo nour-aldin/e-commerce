@@ -56,7 +56,7 @@ export const signInUser = (email, password) => async (dispatch) => {
   try {
     await auth.signInWithEmailAndPassword(email, password);
     dispatch(signInSuccess(true));
-    dispatch(signUpError([]))
+    dispatch(signInError([]))
   } catch (err) {
     dispatch(signInError([err.message]))
   }
@@ -77,6 +77,7 @@ export const signUpUser =
 
       await handleUserProfile(user, { displayName });
       dispatch(signUpSuccess(true));
+      dispatch(signUpError(['']))
     } catch (err) {
       console.log(err);
     }
@@ -86,6 +87,7 @@ export const signInWithGoogle = () => async dispatch => {
     await auth.signInWithPopup(GoogleProvider)
     .then(() => {
       dispatch(signInSuccess(true));
+      dispatch(signInError(['']))
     })
   } catch (err) {
     console.log(err)

@@ -5,7 +5,6 @@ import {
   selectSignInSuccess,
   signInWithGoogle,
   selectSignInError,
-  selectUser,
 } from "../redux/user/userSlice";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -14,7 +13,6 @@ import Button from "./forms/Button";
 import FormInput from "./forms/FormInput";
 
 const SignIn = () => {
-  const User = useSelector(selectUser)
   const signInSuccess = useSelector(selectSignInSuccess);
   const signInError = useSelector(selectSignInError);
   const dispatch = useDispatch();
@@ -27,14 +25,17 @@ const SignIn = () => {
   });
 
   useEffect(() => {
-    if (User) {
+    console.log("hm")
+    console.log(signInSuccess)
+    if (signInSuccess == true) {
+      console.log("a7ab2a")
       setUser({
         email: "",
         password: "",
       });
-      return navigate("../", { replace: true });
+      navigate("../", { replace: true });
     }
-  }, [signInSuccess]);
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
