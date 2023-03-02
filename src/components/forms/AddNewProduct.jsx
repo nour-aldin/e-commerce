@@ -9,7 +9,7 @@ import Button from "./Button";
 import FormInput from "./FormInput";
 import FormSelect from "./FormSelect";
 import { selectModal, setModal } from "../../redux/modal/modalSlice";
-import {CKEditor}  from "ckeditor4-react";
+
 
 const AddNewProduct = () => {
 
