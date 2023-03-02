@@ -25,10 +25,7 @@ const SignIn = () => {
   });
 
   useEffect(() => {
-    console.log("hm")
-    console.log(signInSuccess)
     if (signInSuccess == true) {
-      console.log("a7ab2a")
       setUser({
         email: "",
         password: "",
