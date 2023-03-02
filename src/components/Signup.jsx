@@ -26,7 +26,6 @@ const Signup = () => {
   const signUpSuccess = useSelector(selectSignUpSuccess);
 
   useEffect(() => {
-    console.log(signUpSuccess);
     if (signUpSuccess === true) {
       navigate("../", { replace: true });
     }

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUser, setUser } from "./redux/user/userSlice";
+import { useEffect} from "react";
+import { Route, Routes} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "./redux/user/userSlice";
 
 import Header from "./components/Header";
 import AdminToolbar from "./components/AdminToolbar";

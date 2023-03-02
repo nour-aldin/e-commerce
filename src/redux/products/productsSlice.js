@@ -13,7 +13,6 @@ export const productsSlice = createSlice({
   },
   reducers: {
     addProduct: (state, action) => {
-      console.log("STORE HH", action.payload)
       handleAddProduct({
         ...action.payload,
         productAdminUserId: auth.currentUser.uid

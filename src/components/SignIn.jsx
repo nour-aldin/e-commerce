@@ -27,7 +27,6 @@ const SignIn = () => {
   });
 
   useEffect(() => {
-    console.log(signInSuccess);
     if (User) {
       setUser({
         email: "",
