@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   signInUser,
   selectSignInSuccess,
-  signInSuccess,
   signInWithGoogle,
-  selectSignInError
+  selectSignInError,
 } from "../redux/user/userSlice";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -15,7 +14,7 @@ import FormInput from "./forms/FormInput";
 
 const SignIn = () => {
   const signInSuccess = useSelector(selectSignInSuccess);
-  const signInError = useSelector(selectSignInError)
+  const signInError = useSelector(selectSignInError);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -24,20 +23,17 @@ const SignIn = () => {
     email: "",
     password: "",
   });
-  
 
   useEffect(() => {
-    console.log(signInSuccess)
+    console.log(signInSuccess);
     if (signInSuccess) {
       setUser({
         email: "",
         password: "",
       });
       return navigate("../", { replace: true });
-
     }
-  },[signInSuccess]);
-
+  }, [signInSuccess]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,8 +44,8 @@ const SignIn = () => {
   };
 
   const handleSigninWithGoogle = () => {
-    dispatch(signInWithGoogle())
-  }
+    dispatch(signInWithGoogle());
+  };
 
   const handelFormSubmit = (e) => {
     e.preventDefault();

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, logOut } from "../redux/user/userSlice";
@@ -7,9 +7,9 @@ import {
   asyncGetUserOrderHistory,
   selectUserOrderHistory,
 } from "../redux/orders/orderSlice";
-import userProfileImage from "../assets/user.png";
 import OrderHistory from "../components/OrderHistory";
 import UserToolBar from "../components/UserToolBar";
+import Footer from "../components/Footer";
 
 const Dashoboard = () => {
   const [displayName, setDisplayName] = useState("");
@@ -36,6 +36,7 @@ const Dashoboard = () => {
   };
 
   return (
+    <div>
     <div className="flex flex-row py-1">
       <UserToolBar />
       <div className="mx-5 w-full">
@@ -48,9 +49,6 @@ const Dashoboard = () => {
               <th scope="col" className="px-6 py-3">
                 Order ID
               </th>
-              {/* <th scope="col" className="px-6 py-3">
-                Quantity
-              </th> */}
               <th scope="col" className="px-6 py-3">
                 Amount
               </th>
@@ -63,6 +61,8 @@ const Dashoboard = () => {
         </table>
         
       </div>
+    </div>
+      <Footer />
     </div>
   );
 };

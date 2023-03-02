@@ -11,9 +11,13 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { apiInstance } from "../Utils";
 
 import { useSelector, useDispatch } from "react-redux";
-import {selectCartTotal, clearCart, selectTotalNumCartItems, selectCartItems} from '../redux/cart/cartSlice'
+import {
+  selectCartTotal,
+  clearCart,
+  selectTotalNumCartItems,
+  selectCartItems,
+} from "../redux/cart/cartSlice";
 import { saveOrder } from "../redux/orders/orderSlice";
-
 
 const initialAddressState = {
   line1: "",
@@ -25,13 +29,13 @@ const initialAddressState = {
 };
 
 const PaymentDetails = () => {
-  const navigate = useNavigate()
-  const stripe = useStripe()
-  const elements = useElements()
-  const dispatch = useDispatch()
-  const total = useSelector(selectCartTotal)
-  const totalItems = useSelector(selectTotalNumCartItems)
-  const cartItems = useSelector(selectCartItems)
+  const navigate = useNavigate();
+  const stripe = useStripe();
+  const elements = useElements();
+  const dispatch = useDispatch();
+  const total = useSelector(selectCartTotal);
+  const totalItems = useSelector(selectTotalNumCartItems);
+  const cartItems = useSelector(selectCartItems);
   const [billingAddress, setBillingAddress] = useState({
     ...initialAddressState,
   });
@@ -42,10 +46,10 @@ const PaymentDetails = () => {
   const [nameOnCard, setNameOnCard] = useState("");
 
   useEffect(() => {
-    if(totalItems < 1) {
-      navigate('/dashboard')
+    if (totalItems < 1) {
+      navigate("/dashboard");
     }
-  },[totalItems])
+  }, [totalItems]);
 
   const handleShipping = (evt) => {
     const { name, value } = evt.target;
@@ -65,75 +69,82 @@ const PaymentDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const cardElement = elements.getElement('card')
+    const cardElement = elements.getElement("card");
     if (
-      !shippingAddress.line1 || !shippingAddress.city ||
-      !shippingAddress.state || !shippingAddress.postal_code ||
-      !shippingAddress.country || !billingAddress.line1 ||
-      !billingAddress.city || !billingAddress.state ||
-      !billingAddress.postal_code || !billingAddress.country ||
-      !recipientName || !nameOnCard
+      !shippingAddress.line1 ||
+      !shippingAddress.city ||
+      !shippingAddress.state ||
+      !shippingAddress.postal_code ||
+      !shippingAddress.country ||
+      !billingAddress.line1 ||
+      !billingAddress.city ||
+      !billingAddress.state ||
+      !billingAddress.postal_code ||
+      !billingAddress.country ||
+      !recipientName ||
+      !nameOnCard
     ) {
       return;
     }
-    apiInstance.defaults.headers.common['Content-Type'] = "application/json"
-    apiInstance.post('payment/create', {
-      amount: total * 100,
-      shipping: {
-        name: recipientName,
-        address: {
-          ...shippingAddress
-        }
-      }
-
-    }) .then(({data: clientSecret}) => {
-      stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement,
-        billing_details: {
-          name: nameOnCard,
+    apiInstance.defaults.headers.common["Content-Type"] = "application/json";
+    apiInstance
+      .post("payment/create", {
+        amount: total * 100,
+        shipping: {
+          name: recipientName,
           address: {
-            ...billingAddress
-          }
-        }
-      }) .then(({paymentMethod}) => {
-
-        stripe.confirmCardPayment(clientSecret, {
-          payment_method: paymentMethod.id
-        })
-        .then(({ paymentIntent }) => {
-
-          const configOrder = {
-            orderTotal: total,
-            orderItems: cartItems.map(item => {
-              const {documentId, thumbnail, name, price, quantity} = item
-              return {
-                documentId,
-                thumbnail,
-                name,
-                price,
-                quantity
-              }
-            })
-          }
-          dispatch(saveOrder(configOrder))
-          dispatch(clearCart())
-
-        })
+            ...shippingAddress,
+          },
+        },
       })
-    })
-
+      .then(({ data: clientSecret }) => {
+        stripe
+          .createPaymentMethod({
+            type: "card",
+            card: cardElement,
+            billing_details: {
+              name: nameOnCard,
+              address: {
+                ...billingAddress,
+              },
+            },
+          })
+          .then(({ paymentMethod }) => {
+            stripe
+              .confirmCardPayment(clientSecret, {
+                payment_method: paymentMethod.id,
+              })
+              .then(({ paymentIntent }) => {
+                const configOrder = {
+                  orderTotal: total,
+                  orderItems: cartItems.map((item) => {
+                    const { documentId, thumbnail, name, price, quantity } =
+                      item;
+                    return {
+                      documentId,
+                      thumbnail,
+                      name,
+                      price,
+                      quantity,
+                    };
+                  }),
+                };
+                dispatch(saveOrder(configOrder));
+                dispatch(clearCart());
+              });
+          });
+      });
   };
 
   const configCardElement = {
-    iconStyle: 'solid',
+    iconStyle: "solid",
     style: {
       base: {
-        fontSize: '16px',
-      }
+        fontSize: "16px",
+      },
     },
-    hidePostalCode: true
-  } 
+    hidePostalCode: true,
+  };
 
   return (
     <div className="mt-5 md:w-[50%] md:mx-auto">
@@ -289,12 +300,10 @@ const PaymentDetails = () => {
             Card Details
           </h2>
           <div className="m-5">
-          <CardElement 
-            options={configCardElement}
-          />
+            <CardElement options={configCardElement} />
           </div>
         </div>
-        <Button type='submit'>Pay Now</Button>
+        <Button type="submit">Pay Now</Button>
       </form>
     </div>
   );

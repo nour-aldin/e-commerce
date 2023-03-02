@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpUser,selectSignUpError, selectSignUpSuccess, selectUser } from "../redux/user/userSlice";
+import {
+  signUpUser,
+  selectSignUpError,
+  selectSignUpSuccess,
+} from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
-
 
 import FormInput from "./forms/FormInput";
 import Button from "./forms/Button";
 
 const Signup = () => {
-
   const [user, setUser] = useState({
     displayName: "",
     email: "",
@@ -16,19 +18,19 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const signUpError = useSelector(selectSignUpError)
-  const signUpSuccess = useSelector(selectSignUpSuccess)
-  
+  const signUpError = useSelector(selectSignUpError);
+  const signUpSuccess = useSelector(selectSignUpSuccess);
+
   useEffect(() => {
-    console.log(signUpSuccess)
+    console.log(signUpSuccess);
     if (signUpSuccess === true) {
-      navigate('../', {replace: true})
+      navigate("../", { replace: true });
     }
-  },[signUpSuccess])
+  }, [signUpSuccess]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,20 +43,20 @@ const Signup = () => {
   const handelFormSubmit = (e) => {
     e.preventDefault();
     const { displayName, email, password, confirmPassword } = user;
-    dispatch(signUpUser(displayName, email, password, confirmPassword))
+    dispatch(signUpUser(displayName, email, password, confirmPassword));
   };
 
   useEffect(() => {
-    if(signUpSuccess) {
+    if (signUpSuccess) {
       setUser({
         displayName: "",
         email: "",
         password: "",
         confirmPassword: "",
       });
-      navigate('../', {replace: true})
+      navigate("../", { replace: true });
     }
-  },[signUpSuccess])
+  }, [signUpSuccess]);
 
   return (
     <div className="border-2  rounded-lg shadow-xl m-5 p-5 lg:w-[40%] mx-auto sm:w-full  lg:border-black sm:boder-0">

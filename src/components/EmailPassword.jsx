@@ -1,12 +1,11 @@
-import React,{useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import FormInput from './forms/FormInput'
-import Button from './forms/Button'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import FormInput from "./forms/FormInput";
+import Button from "./forms/Button";
 
-import { auth } from '../firbase/utils'
+import { auth } from "../firbase/utils";
 
 const EmailPassword = () => {
-
   const [user, setUser] = useState({
     email: "",
   });
@@ -23,27 +22,28 @@ const EmailPassword = () => {
 
   let navigate = useNavigate();
 
-  const handelFormSubmit = async e => {
+  const handelFormSubmit = async (e) => {
     e.preventDefault();
-    const {email} = user;
+    const { email } = user;
 
     try {
       const config = {
-        url: 'http://localhost:5173/login'
-      }
+        url: "http://localhost:5173/login",
+      };
 
-      await auth.sendPasswordResetEmail(email, config)
-      .then(() => {
-        navigate('/login')
-      }) .catch(() => {
-        const err = ['Email was not found please try again.']
-        setErrors(err)
-      })
-    } catch(err) {
+      await auth
+        .sendPasswordResetEmail(email, config)
+        .then(() => {
+          navigate("/login");
+        })
+        .catch(() => {
+          const err = ["Email was not found please try again."];
+          setErrors(err);
+        });
+    } catch (err) {
       // console.log(err)
     }
-
-  }
+  };
 
   return (
     <div className="border-2 border-black rounded-lg shadow-xl m-5 p-5 w-[40%] mx-auto">
@@ -67,18 +67,10 @@ const EmailPassword = () => {
           placeholder="Email"
           onChange={handleChange}
         />
-
-        {/* <FormInput
-          type="password"
-          name="password"
-          value={user.password}
-          placeholder="Password"
-          onChange={handleChange}
-        /> */}
         <Button type="submit">Email Password</Button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EmailPassword
+export default EmailPassword;

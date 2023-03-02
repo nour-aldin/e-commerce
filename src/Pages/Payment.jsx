@@ -10,6 +10,7 @@ import PaymentDetails from "../components/PaymentDetails";
 import { Elements } from "@stripe/react-stripe-js";
 import { key } from "../stripe/config";
 import { loadStripe } from "@stripe/stripe-js";
+import Footer from "../components/Footer";
 
 const stripePromise = loadStripe(key)
 
@@ -23,9 +24,12 @@ const Payment = () => {
     } 
   }, [user]);
   return (
+    <div>
     <Elements stripe={stripePromise}>
       <PaymentDetails />
     </Elements>
+    <Footer />
+    </div>
   );
 };
 

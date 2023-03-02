@@ -48,16 +48,6 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* <Route
-          path="/register"
-          element={
-            !user ? <RegisterationPage /> : <Navigate replace to={"/"} />
-          }
-        /> */}
-        {/* <Route
-          path="/login"
-          element={!user ? <Login /> : <Navigate replace to={"/"} />}
-        /> */}
         <Route path="/register" element={<RegisterationPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/recovery" element={<Recovery />} />

@@ -11,6 +11,7 @@ import {
 } from "../redux/orders/orderSlice";
 import UserToolBar from "../components/UserToolBar";
 import OrderDetails from "../components/OrderDetails";
+import Footer from "../components/Footer";
 
 const Order = () => {
   const { orderID } = useParams();
@@ -20,16 +21,18 @@ const Order = () => {
   useEffect(() => {
     dispatch(asyncGetOrderDetails(orderID));
     return () => {
-      dispatch(setOrderDetails({}))
-    }
+      dispatch(setOrderDetails({}));
+    };
   }, []);
 
   return (
+    <div>
     <div className="flex flex-row py-1 ">
-    
       <UserToolBar />
       <div className="mx-5 w-full">
-      <h1 className="max-w-max  my-5 text-3xl text-slate-800 font-light uppercase">Order ID: #{orderID}</h1>
+        <h1 className="max-w-max  my-5 text-3xl text-slate-800 font-light uppercase">
+          Order ID: #{orderID}
+        </h1>
         <table className=" w-full mx-auto my-5 rounded-lg text-sm text-center text-gray-500 shadow-2xl">
           <thead className="text-xs text-gray-700 uppercase bg-gray-100 border-black">
             <tr>
@@ -50,16 +53,17 @@ const Order = () => {
               </th>
             </tr>
           </thead>
-          { orderItems &&orderItems.map((order, index)=>(
-            <OrderDetails key={index} order={order}/>
-          ))}
+          {orderItems &&
+            orderItems.map((order, index) => (
+              <OrderDetails key={index} order={order} />
+            ))}
         </table>
         <div className="text-lg font-semibold text-black w-[450px]  mb-5 uppercase">
-        <h2 className="shadow-lg inline ">Total: {orderTotal}</h2>
+          <h2 className="shadow-lg inline ">Total: {orderTotal}</h2>
         </div>
       </div>
-
-      
+    </div>
+    <Footer />
     </div>
   );
 };

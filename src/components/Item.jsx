@@ -1,18 +1,20 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { removeCartItem, addToCart, reduceCartItem } from "../redux/cart/cartSlice";
+import {
+  removeCartItem,
+  addToCart,
+  reduceCartItem,
+} from "../redux/cart/cartSlice";
 
 const Item = ({ item }) => {
-
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handleAddProduct = (product) => {
-    dispatch(addToCart(product))
-  }
+    dispatch(addToCart(product));
+  };
 
   const handleReduceProduct = (product) => {
-    dispatch(reduceCartItem(product))
-  }
+    dispatch(reduceCartItem(product));
+  };
 
   return (
     <tbody className="rounded-lg">
@@ -25,12 +27,29 @@ const Item = ({ item }) => {
         </th>
         <td className="px-6 py-4 text-black">{item.name}</td>
         <td className="px-6 py-4 text-black text-xl">
-          <span onClick={() => handleReduceProduct(item)} className="hover: cursor-pointer" >&#60;</span> {item.quantity} <span onClick={() => handleAddProduct(item)} className="hover: cursor-pointer">&#62;</span>
+          <span
+            onClick={() => handleReduceProduct(item)}
+            className="hover: cursor-pointer"
+          >
+            &#60;
+          </span>{" "}
+          {item.quantity}{" "}
+          <span
+            onClick={() => handleAddProduct(item)}
+            className="hover: cursor-pointer"
+          >
+            &#62;
+          </span>
         </td>
         <td className="px-6 py-4 text-black">{item.category}</td>
         <td className="px-6 py-4 text-black">${item.price}</td>
         <td className="px-6 py-4 text-black">
-          <span className="text-xl hover: cursor-pointer" onClick={() => dispatch(removeCartItem(item))}>X</span>
+          <span
+            className="text-xl hover: cursor-pointer"
+            onClick={() => dispatch(removeCartItem(item))}
+          >
+            X
+          </span>
         </td>
       </tr>
     </tbody>

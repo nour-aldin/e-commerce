@@ -45,16 +45,16 @@ const Search = () => {
   };
 
   return (
-    <div className="ml-[10rem] mr-[6rem]">
+    <div className="lg:ml-[10rem] lg:mr-[6rem] sm: mx-10">
       <h1 className="my-5 font-sans text-2xl uppercase">Browse Products</h1>
-      <div className="w-[10rem] relative right-5">
+      <div className="w-[10rem]">
         <FormSelect {...configFilters} onChange={handleFilter} />
       </div>
-      <div className="grid grid-cols-4 gap-4 justify-between">
+      <div className="grid justify-between xl:grid-cols-4 lg:gap-4 md:grid-cols-2 md:gap-4  ">
         {products &&
           products.map((product, index) => (
-            <div key={index} className="flex flex-row flex-wrap">
-              <div className="flex-[50%]">
+            <div key={index} className="lg:flex lg:flex-row lg:flex-wrap">
+              <div className="lg:flex-[50%]">
                 <ProductsCard product={product} type="user" />
               </div>
             </div>
