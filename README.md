@@ -5,7 +5,7 @@ eCommerce shoping website using React, Redux, and TailwindCss
     <td align="center" width="600px">Home Page</td>
   </tr>
   <tr>
-    <td valign="top"><img src="\HomePage.jpeg"></td>
+    <td valign="top"><img src="./HomePage.jpeg"></td>
   </tr>
  </table>
 
